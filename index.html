@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <!-- basic -->
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <!-- mobile metas -->
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+      <!-- site metas -->
+      <title>Ayur</title>
+      <meta name="keywords" content="">
+      <meta name="description" content="">
+      <meta name="author" content="">
+      <!-- bootstrap css -->
+      <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+      <!-- style css -->
+      <link rel="stylesheet" type="text/css" href="css/style.css">
+      <!-- Responsive-->
+      <link rel="stylesheet" href="css/responsive.css">
+      <!-- fevicon -->
+      <link rel="icon" href="images/fevicon.png" type="image/gif" />
+      <!-- Scrollbar Custom CSS -->
+      <link rel="stylesheet" href="css/jquery.mCustomScrollbar.min.css">
+      <!-- Tweaks for older IEs-->
+      <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
+      <!-- fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Poppins:400,700&display=swap" rel="stylesheet">
+      <!-- font awesome -->
+      <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+      <!--  -->
+      <!-- owl stylesheets -->
+      <link href="https://fonts.googleapis.com/css?family=Great+Vibes|Poppins:400,700&display=swap&subset=latin-ext" rel="stylesheet">
+      <link rel="stylesheet" href="css/owl.carousel.min.css">
+      <link rel="stylesoeet" href="css/owl.theme.default.min.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+   </head>
+   <body>
+      <!-- banner bg main start -->
+      <div class="banner_bg_main" id="content">
+         <!-- header top section start -->
+         </div>
+      <!-- copyright section end -->
+      <!-- Javascript files-->
+      <script src="js/jquery.min.js"></script>
+      <script src="js/popper.min.js"></script>
+      <script src="js/bootstrap.bundle.min.js"></script>
+      <script src="js/jquery-3.0.0.min.js"></script>
+      <script src="js/plugin.js"></script>
+      <!-- sidebar -->
+      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+      <script src="js/custom.js"></script>
+      <script>
+
+const routes = {
+    
+    "/": {
+        template: "/templates/home.html",
+        title: "Home",
+        description: "This is the home page",
+    },
+    "/Ayurvedichairoil": {
+        template: "/templates/Ayurvedichairoil.html",
+        title: "Ayurvedic hair oil",
+        description: "Ayurvedic hair oil",
+    },
+    "/AyurvedicToothpaste": {
+        template: "templates/AyurvedicToothpaste.html",
+        title: "Ayurvedic Toothpaste",
+        description: "Ayurvedic Toothpaste",
+    },
+};
+
+document.addEventListener("click", (e) => {
+    const { target } = e;
+
+    if (!target.matches("nav a")) {
+        return;
+    }
+    e.preventDefault();
+    route();
+});
+const route = (event) => {
+    event = event || window.event; // get window.event if event argument not provided
+    event.preventDefault();
+    // window.history.pushState(state, unused, target link);
+    window.history.pushState({}, "", event.target.href);
+    locationHandler();
+};
+         function openNav() {
+           document.getElementById("mySidenav").style.width = "250px";
+         }
+         
+         function closeNav() {
+           document.getElementById("mySidenav").style.width = "0";
+         }
+         const locationHandler = async () => {
+    // get the url path, replace hash with empty string
+    var location = window.location.pathname;
+    // if the path length is 0, set it to primary page route
+    if (location.length == 0 || location=="/index.html" ) {
+
+        location = "/";
+    }
+    // get the route object from the routes object
+    const route = routes[location] ;
+    
+    // get the html from the template
+    const html = await fetch(route.template).then((response) => response.text());
+    // set the content of the content div to the html
+    document.getElementById("content").innerHTML = html;
+    // set the title of the document to the title of the route
+    document.title = route.title;
+    // set the description of the document to the description of the route
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute("content", route.description);
+};
+// add an event listener to the window that watches for url changes
+window.onpopstate = locationHandler;
+// call the urlLocationHandler function to handle the initial url
+window.route = route;
+// call the urlLocationHandler function to handle the initial url
+locationHandler();
+      </script>
+   </body>
+</html>
